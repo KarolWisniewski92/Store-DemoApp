@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from './Header';
 import Slider from './Slider';
-import StoreBar from './StoreBar';
 import StoreBody from './StoreBody';
 import Footer from './Footer';
 
@@ -13,10 +12,7 @@ class App extends React.Component {
       <div>
         <Header />
         <Slider />
-        <div className="flex-row">
-          <StoreBar />
-          <StoreBody />
-        </div>
+        <StoreBody />
         <Footer />
       </div>
     );

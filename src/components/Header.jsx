@@ -35,23 +35,27 @@ class HeaderComponent extends React.Component {
         // this.checkLogged()
         // console.log(this.checkLogged());
         return (
-            <div className="wd-100 h100 bcg-lightgray p-10 flex-row" >
-                <div className="wd-25 bcg-yellow">Logo</div>
-                <div className="wd-50 bcg-yellow mlr-10">Menu Content</div>
-                <div className="wd-25 bcg-yellow flex-center">
+            <div className="wd-100 h75 bcg-lightgray p-10 flex-row" >
+                <div className="wd-25 bcg-white flex-center"><Link to="/" className="text-no-decoration">Logo</Link></div>
+                <div className="wd-50 bcg-white mlr-10 flex-center">
+                    Menu Content
+
+                </div>
+                <div className="wd-25 flex-center">
                     {console.log(this.props.logIn)}
 
                     {!this.props.logIn &&
                         <React.Fragment>
-                            <Link to="/logIn"><button className="btn btn-blue">Zaloguj</button></Link>
-                            <Link to="/createAccount"><button className="btn btn-blue">Zarejestruj</button></Link>
+                            <Link to="/logIn"><button className="btn-2 btn-white">Zaloguj</button></Link>
+                            <Link to="/createAccount"><button className="btn-2 btn-white">Zarejestruj</button></Link>
                         </React.Fragment>
 
                     }
 
                     {this.props.logIn &&
                         <React.Fragment>
-                            <button className="btn btn-red" onClick={this.logOut}>Wyloguj</button>
+                            <Link to="/dashboard"><button className="btn-2 btn-white">Moje konto</button></Link>
+                            <button className="btn-2 btn-white" onClick={this.logOut}>Wyloguj</button>
                         </React.Fragment>
 
                     }
