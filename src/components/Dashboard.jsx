@@ -2,6 +2,10 @@ import React from 'react';
 import Header from './Header';
 import Slider from './Slider';
 import Footer from './Footer';
+import Shopcart from './dashboard/Shopcart';
+import MyData from './dashboard/MyData';
+import MyAdres from './dashboard/MyAdres';
+import MyHistory from './dashboard/MyHistory';
 
 class Dashboard extends React.Component {
 
@@ -9,7 +13,7 @@ class Dashboard extends React.Component {
         super();
         this.state = {
             showState: {
-                showCheckout: true,
+                showShopcart: true,
                 showMyData: false,
                 showMyAdres: false,
                 showMyHistory: false
@@ -19,12 +23,15 @@ class Dashboard extends React.Component {
     }
 
     showAction = (event) => {
-        console.log(event.target.getAttribute('name'));
-        this.setState({
-            showState: {
-                [event.target.getAttribute('name')]: 'true'
-            }
-        })
+        // console.log(event.target.getAttribute('name'));
+        if (event.target.getAttribute('name') === null) { return; } else {
+            this.setState({
+                showState: {
+                    [event.target.getAttribute('name')]: 'true'
+                }
+            })
+        }
+
     }
     render() {
         return (<div>
@@ -35,23 +42,23 @@ class Dashboard extends React.Component {
                     <h3 className="text-center mb-30">Panel użytkownika:</h3>
                     <div className="flex-row">
                         <div className="wd-20 p-10 bcg-pink" onClick={this.showAction} >
-                            <p className="mb-20" name="showCheckout">Koszyk:</p>
+                            <p className="mb-20" name="showShopcart">Koszyk:</p>
                             <p className="mb-20" name="showMyData">Moje dane:</p>
                             <p className="mb-20" name="showMyAdres">Moje adresy:</p>
                             <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
                         </div>
                         <div className="wd-80 bcg-pink p-10 ml-30">
-                            {this.state.showState.showCheckout &&
-                                <p>To jest koszyk!</p>}
+                            {this.state.showState.showShopcart &&
+                                <Shopcart />}
 
                             {this.state.showState.showMyData &&
-                                <p>To są moje dane!</p>}
+                                <MyData />}
 
                             {this.state.showState.showMyAdres &&
-                                <p>To są moje adresy!</p>}
+                                <MyAdres />}
 
                             {this.state.showState.showMyHistory &&
-                                <p>To jest moja historia!</p>}
+                                <MyHistory />}
 
                         </div>
                     </div>
