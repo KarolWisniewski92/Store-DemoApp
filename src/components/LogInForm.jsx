@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseApp } from '../fbase';
-import { withRouter } from "react-router-dom";
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class LogInForm extends React.Component {
+class LogInFormComponent extends React.Component {
 
     constructor() {
         super();
@@ -25,6 +26,7 @@ class LogInForm extends React.Component {
             .then((userCredential) => {
                 // Signed in
                 console.log(`Udało się zalogować!`);
+                this.props.updateLogIn(true);
                 // let user = userCredential.user;
                 this.props.history.push("/dashboard")
 
@@ -61,6 +63,21 @@ class LogInForm extends React.Component {
         </div>)
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+        updateLogIn: logInState => dispatch({ type: 'CHANGE_LOGIN_STATE', payload: logInState })
+    }
+
+}
+
+const mapStateToProps = state => {
+    return {
+        logIn: state.logIn
+    }
+}
+
+const LogInForm = connect(mapStateToProps, mapDispatchToProps)(LogInFormComponent)
 
 export default withRouter(LogInForm);
 // export default LogInForm;

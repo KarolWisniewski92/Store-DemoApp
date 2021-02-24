@@ -21,8 +21,7 @@ class HeaderComponent extends React.Component {
         firebaseApp.auth().signOut()
             .then(() => {
                 console.log(`Wylogowano poprawnie`);
-                let user = firebaseApp.auth().currentUser;
-                console.log(user);
+                this.props.updateLogIn(false);
 
             }).catch((error) => {
                 console.log(error);
@@ -64,6 +63,13 @@ class HeaderComponent extends React.Component {
     }
 }
 
+const mapDispatchToProps = dispatch => {
+    return {
+        updateLogIn: logInState => dispatch({ type: 'CHANGE_LOGIN_STATE', payload: logInState })
+    }
+
+}
+
 const mapStateToProps = state => {
     return {
         logIn: state.logIn
@@ -71,5 +77,5 @@ const mapStateToProps = state => {
 
 }
 
-const Header = connect(mapStateToProps)(HeaderComponent)
+const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent)
 export default Header;
