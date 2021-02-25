@@ -2,8 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { firebaseApp, fbase } from '../fbase';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class registerForm extends React.Component {
+class RegisterFormComponent extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -34,6 +35,7 @@ class registerForm extends React.Component {
                 })
                     .then(() => {
                         console.log(`Poprawnie założono użytkownika i utworzono go w bazie danych!`);
+                        this.props.updateLogIn(true);
                         this.props.history.push("/dashboard")
                     })
 
@@ -51,6 +53,8 @@ class registerForm extends React.Component {
 
             });
     }
+
+    
 
     render() {
         return (
@@ -74,4 +78,19 @@ class registerForm extends React.Component {
     }
 }
 
-export default withRouter(registerForm);
+const mapDispatchToProps = dispatch => {
+    return {
+        updateLogIn: logInState => dispatch({ type: 'CHANGE_LOGIN_STATE', payload: logInState })
+    }
+
+}
+
+const mapStateToProps = state => {
+    return {
+        logIn: state.logIn
+    }
+}
+
+const RegisterForm = connect(mapStateToProps, mapDispatchToProps)(RegisterFormComponent)
+
+export default withRouter(RegisterForm);

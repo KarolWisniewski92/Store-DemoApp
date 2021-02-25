@@ -7,15 +7,17 @@ import MyData from './dashboard/MyData';
 import MyAdres from './dashboard/MyAdres';
 import MyHistory from './dashboard/MyHistory';
 import { firebaseApp, fbase } from '../fbase';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
-class Dashboard extends React.Component {
+class DashboardComponent extends React.Component {
 
     constructor() {
         super();
         this.state = {
             showState: {
-                showShopcart: true,
-                showMyData: false,
+                showShopcart: false,
+                showMyData: true,
                 showMyAdres: false,
                 showMyHistory: false
             },
@@ -84,35 +86,50 @@ class Dashboard extends React.Component {
         return (<div>
             <Header />
             <Slider />
-            <div className="bcg-lightgray pbt-30">
-                <div className="wrapper-50 bcg-white p-30 h500">
-                    <h3 className="text-center mb-30">Panel użytkownika:</h3>
-                    <div className="flex-row">
-                        <div className="wd-20 p-10 bcg-pink" onClick={this.showAction} >
-                            <p className="mb-20" name="showShopcart">Koszyk:</p>
-                            <p className="mb-20" name="showMyData">Moje dane:</p>
-                            <p className="mb-20" name="showMyAdres">Moje adresy:</p>
-                            <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
-                        </div>
-                        <div className="wd-80 bcg-pink p-10 ml-30">
-                            {this.state.showState.showShopcart &&
-                                <Shopcart />}
+            {this.props.logIn &&
 
-                            {this.state.showState.showMyData &&
-                                <MyData user={this.state.userData} handleChange={this.handleChange} />}
+                <div className="bcg-lightgray pbt-30">
+                    <div className="wrapper-50 bcg-white p-30 h500">
+                        <h3 className="text-center mb-30">Panel użytkownika:</h3>
+                        <div className="flex-row">
+                            <div className="wd-20 p-10 bcg-pink" onClick={this.showAction} >
+                                <p className="mb-20" name="showShopcart">Koszyk:</p>
+                                <p className="mb-20" name="showMyData">Moje dane:</p>
+                                <p className="mb-20" name="showMyAdres">Moje adresy:</p>
+                                <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
+                            </div>
+                            <div className="wd-80 bcg-pink p-10 ml-30">
+                                {this.state.showState.showShopcart &&
+                                    <Shopcart />}
 
-                            {this.state.showState.showMyAdres &&
-                                <MyAdres />}
+                                {this.state.showState.showMyData &&
+                                    <MyData user={this.state.userData} handleChange={this.handleChange} />}
 
-                            {this.state.showState.showMyHistory &&
-                                <MyHistory />}
+                                {this.state.showState.showMyAdres &&
+                                    <MyAdres />}
+
+                                {this.state.showState.showMyHistory &&
+                                    <MyHistory />}
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+            {!this.props.logIn &&
+                this.props.history.push("/logIn")
+            }
             <Footer />
         </div >)
     }
 }
 
-export default Dashboard;
+
+const mapStateToProps = state => {
+    return {
+        logIn: state.logIn
+    }
+}
+
+const Dashboard = connect(mapStateToProps)(DashboardComponent)
+
+export default withRouter(Dashboard);
