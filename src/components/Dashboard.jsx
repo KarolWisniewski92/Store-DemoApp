@@ -20,11 +20,6 @@ class Dashboard extends React.Component {
                 showMyHistory: false
             },
             userData: {
-                uid: "",  //z konta firebase
-                email: "", //z konta firebase
-                name: "",
-                surname: "",
-                phone: ""
             }
 
         }
@@ -43,16 +38,21 @@ class Dashboard extends React.Component {
     checkUserData = () => {
         let user = firebaseApp.auth().currentUser;
         if (user !== null) {
-            console.log(user);
-            if (user.phoneNumber === null) {
-                Object.defineProperty(user, 'phoneNumber', { value: "" })
-            }
-
-            // user.phoneNumber = "";
             this.setState({
-                userData: {
-                    uid: user.uid,
-                    email: user.email,
+                userData: { path: `users/${user.uid}` }
+            })
+
+            let path = `users/${user.uid}`
+            fbase.listenTo(path, {
+                context: this,
+                then(data) {
+                    this.setState({
+                        userData: {
+                            ...data,
+                            path: path
+                        }
+                    })
+
                 }
             })
         }
@@ -63,6 +63,8 @@ class Dashboard extends React.Component {
 
     componentDidMount() {
         this.checkUserData();
+
+
     }
 
 
@@ -109,7 +111,7 @@ class Dashboard extends React.Component {
                 </div>
             </div>
             <Footer />
-        </div>)
+        </div >)
     }
 }
 
