@@ -59,11 +59,8 @@ class Dashboard extends React.Component {
 
                             {this.state.showState.showMyHistory &&
                                 <MyHistory />}
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <Footer />

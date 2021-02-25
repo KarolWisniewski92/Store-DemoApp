@@ -33,6 +33,40 @@ input {
   height: 50px;
 }
 
+.searchBar {
+  width: 100%;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  padding: 10px;
+  border: none;
+}
+
+.searchBtn {
+  color: white;
+  padding: 0px 10px;
+  background-color: #3d8be6;
+  border: none;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.searchBtn:hover {
+  background-color: #367ac9;
+}
+
+.tempLogo {
+  font-weight: bold;
+  font-size: 22px;
+  color: white;
+  text-shadow: 1px 1px 3px #868686;
+}
+
+.logoDecoration {
+  color: #3d8be6;
+}
+
 .shadowBar {
   position: absolute;
   bottom: 0px;

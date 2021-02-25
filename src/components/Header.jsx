@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from 'react-router-dom';
 import { firebaseApp } from '../fbase';
 import { connect } from 'react-redux';
+import SearchBar from "./SearchBar";
 
 class HeaderComponent extends React.Component {
 
@@ -36,10 +37,9 @@ class HeaderComponent extends React.Component {
         // console.log(this.checkLogged());
         return (
             <div className="wd-100 h75 bcg-lightgray p-10 flex-row" >
-                <div className="wd-25 bcg-white flex-center"><Link to="/" className="text-no-decoration">Logo</Link></div>
-                <div className="wd-50 bcg-white mlr-10 flex-center">
-                    Menu Content
-
+                <div className="wd-25 flex-center"><Link to="/" className="text-no-decoration tempLogo">My<span className="logoDecoration">Store</span>App - Demo</Link></div>
+                <div className="wd-50 mlr-10 flex-center">
+                    <SearchBar />
                 </div>
                 <div className="wd-25 flex-center">
                     {console.log(this.props.logIn)}
