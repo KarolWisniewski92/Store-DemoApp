@@ -29,6 +29,7 @@ class MyData extends React.Component {
                     </div>
                 </div>
                 <button className="btn-2 sendBtnDashboard">Zaktualizuj dane</button>
+                <p className="text-right mt-10">* adres email nie może zostać zmieniony!</p>
 
 
 
