@@ -1,5 +1,5 @@
 import React from 'react';
-import { firebaseApp, fbase } from '../../fbase';
+import { fbase } from '../../fbase';
 
 class MyData extends React.Component {
 
@@ -15,6 +15,9 @@ class MyData extends React.Component {
         )
 
     }
+
+    
+
     render() {
         return (<div>
             <h3 className="text-center mb-20">MOJE DANE:</h3>

@@ -15,6 +15,7 @@ class DashboardComponent extends React.Component {
     constructor() {
         super();
         this.state = {
+            activeClass: true,
             showState: {
                 showShopcart: false,
                 showMyData: true,
@@ -25,6 +26,13 @@ class DashboardComponent extends React.Component {
             }
 
         }
+    }
+
+    toggle = () => {
+        this.setState({
+            activeClass: !this.state.activeClass
+        })
+
     }
 
     handleChange = (event) => {
@@ -78,9 +86,21 @@ class DashboardComponent extends React.Component {
                     [event.target.getAttribute('name')]: 'true'
                 }
             })
+            {
+                let leftBar = document.querySelector('.leftBar')
+                leftBar = Array.from(leftBar.children);
+                for (let i = 0; i < leftBar.length; i++) {
+                    leftBar[i].classList.remove('active')
+                }
+
+                let activeElement = Array.from(document.getElementsByName(`${event.target.getAttribute('name')}`));
+                activeElement[0].classList.add('active');
+                // console.log(activeElement);
+            }
         }
 
     }
+
     render() {
 
         return (<div>
@@ -92,13 +112,14 @@ class DashboardComponent extends React.Component {
                     <div className="wrapper-50 bcg-white p-30 h500">
                         <h3 className="text-center mb-30">Panel użytkownika:</h3>
                         <div className="flex-row">
-                            <div className="wd-20 p-10 bcg-pink" onClick={this.showAction} >
-                                <p className="mb-20" name="showShopcart">Koszyk:</p>
-                                <p className="mb-20" name="showMyData">Moje dane:</p>
+
+                            <div className="wd-25 p-10 leftBar" onClick={this.showAction} >
+                                <p className="mb-20 active" name="showShopcart">Koszyk:</p>
+                                <p className="mb-20 " name="showMyData" id="test">Moje dane: </p>
                                 <p className="mb-20" name="showMyAdres">Moje adresy:</p>
                                 <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
                             </div>
-                            <div className="wd-80 bcg-pink p-10 ml-30">
+                            <div className="wd-75 p-10 ml-30">
                                 {this.state.showState.showShopcart &&
                                     <Shopcart />}
 
