@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { firebaseApp } from '../fbase';
 import { connect } from 'react-redux';
 import SearchBar from "./SearchBar";
+import { withRouter } from 'react-router-dom';
 
 class HeaderComponent extends React.Component {
 
@@ -23,6 +24,7 @@ class HeaderComponent extends React.Component {
             .then(() => {
                 console.log(`Wylogowano poprawnie`);
                 this.props.updateLogIn(false);
+                this.props.history.push("/")
 
             }).catch((error) => {
                 console.log(error);
@@ -82,4 +84,4 @@ const mapStateToProps = state => {
 }
 
 const Header = connect(mapStateToProps, mapDispatchToProps)(HeaderComponent)
-export default Header;
+export default withRouter(Header);

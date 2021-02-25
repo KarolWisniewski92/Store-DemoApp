@@ -14,7 +14,7 @@ class LogInFormComponent extends React.Component {
         }
     }
 
-    hadleChange = (event) => {
+    handleChange = (event) => {
         this.setState({
             [event.target.name]: event.target.value
         })
@@ -38,11 +38,6 @@ class LogInFormComponent extends React.Component {
             })
     }
 
-    redirectToHome = () => {
-        this.props.history.push("/dashboard")
-    }
-
-
     render(
 
 
@@ -51,8 +46,8 @@ class LogInFormComponent extends React.Component {
             <div className="loginForm">
                 <h3 className="text-center">Zaloguj się:</h3>
                 <form onSubmit={this.logIn} className="flex-column">
-                    <input type="text" placeholder="email" name="email" onChange={this.hadleChange} value={this.state.email} />
-                    <input type="password" placeholder="hasło" name="password" onChange={this.hadleChange} value={this.state.password} />
+                    <input type="text" placeholder="email" name="email" onChange={this.handleChange} value={this.state.email} />
+                    <input type="password" placeholder="hasło" name="password" onChange={this.handleChange} value={this.state.password} />
                     <button>ZALOGUJ SIĘ!</button>
                     <p className="text-right">Nie masz jeszcze konta? <Link to="/createAccount"><span>Zarejestruj się tutaj</span></Link></p>
                     <div>
