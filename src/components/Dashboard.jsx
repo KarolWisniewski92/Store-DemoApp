@@ -111,7 +111,7 @@ class DashboardComponent extends React.Component {
             {this.props.logIn &&
 
                 <div className="bcg-lightgray pbt-30">
-                    <div className="wrapper-50 bcg-white p-30 h500">
+                    <div className="wrapper-50 bcg-white p-30 h500-min">
                         <h3 className="text-center mb-30">Panel użytkownika:</h3>
                         <div className="flex-row">
 

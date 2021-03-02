@@ -1,4 +1,5 @@
 import React from 'react';
+import ParametrList from './ParametrList';
 
 class AddNewItemForm extends React.Component {
 
@@ -10,7 +11,7 @@ class AddNewItemForm extends React.Component {
                 description: "",
                 price: "",
                 onStock: "",
-                photo: "",
+                photo: ""
 
             },
             newParametr: {
@@ -64,19 +65,41 @@ class AddNewItemForm extends React.Component {
                 }
             })
         }
-
         this.setState({
             newParametr: {
                 newParametrName: '',
                 newParametrValue: ''
-
             }
         })
+    }
 
+    deleteParametr = (event) => {
+        let newParametrList = this.state.newItem.parametr.filter((el) => {
+            if (el.newParametrName !== event.target.closest('tr').firstChild.innerHTML) {
+                return el
+            }
+        })
+        this.setState({
+            newItem: {
+                ...this.state.newItem,
+                parametr: [
+                    ...newParametrList
+                ]
+            }
+        })
 
     }
 
     render() {
+
+        let parametrList = <tr><td> Nie podano żadnych parametrów</td></tr>;
+
+        if (Array.isArray(this.state.newItem.parametr)) {
+            parametrList = this.state.newItem.parametr.map((el) => {
+                return (<ParametrList el={el} key={el.newParametrName} deleteParametr={this.deleteParametr} />)
+            })
+        }
+
         return (<div>
             <h3 className="text-center">DODAJ NOWY PRODUKT:</h3>
             <form onSubmit={this.addNewParametr} className="flex-column">
@@ -90,6 +113,15 @@ class AddNewItemForm extends React.Component {
                     <input className="ml-5" type="text" placeholder="Wartość" name="newParametrValue" onChange={this.newParametrHandleChange} value={this.state.newParametr.newParametrValue} />
                     <button type="submit" className="btn-2 btn-green" onClick={this.addNewParametr}>Dodaj parametr</button>
                 </div>
+                <table className="parametrListTable">
+                    <tbody>
+                        <tr>
+                            <td>Parametr:</td>
+                            <td>Wartość:</td>
+                        </tr>
+                        {parametrList}
+                    </tbody>
+                </table>
 
                 <button type="submit" className="btn-2 btn-blue">Dodaj</button>
             </form>
