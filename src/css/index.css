@@ -88,6 +88,10 @@ input {
   border-right: 1px solid black;
 }
 
+.leftBar p {
+  cursor: pointer;
+}
+
 .active {
   background-color: #dbdbdb;
   width: 100%;

@@ -23,7 +23,8 @@ class DashboardComponent extends React.Component {
                 showMyAdres: false,
                 showMyHistory: false,
                 showAddItemForm: false,
-                showInventoryPanel: false
+                showInventoryPanel: false,
+                showUserPanel: false
             },
             userData: {
             }
@@ -125,6 +126,7 @@ class DashboardComponent extends React.Component {
                                     <React.Fragment>
                                         <p className="mb-20" name="showAddItemForm">Dodaj nowy przedmiot:</p>
                                         <p className="mb-20" name="showInventoryPanel">Zarządzaj przedmiotami:</p>
+                                        <p className="mb-20" name="showUserPanel">Zarządzaj użytkownikami:</p>
                                     </React.Fragment>
                                 }
                             </div>

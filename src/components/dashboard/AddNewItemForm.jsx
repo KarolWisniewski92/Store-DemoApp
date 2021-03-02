@@ -11,7 +11,7 @@ const initialStateNewItem = {
     id: "",
     description: "",
     price: "",
-    onStock: "",
+    onStock: false,
     photo: "",
     parametr: []
 }
@@ -26,7 +26,7 @@ class AddNewItemForm extends React.Component {
                 id: createID(),
                 description: "",
                 price: "",
-                onStock: "",
+                onStock: false,
                 photo: ""
             },
             newParametr: {
@@ -37,6 +37,7 @@ class AddNewItemForm extends React.Component {
                 inputNameError: "",
                 inputPriceError: "",
                 inputDescriptionError: "",
+                inputImageError: "",
                 inputParametrNameError: "",
                 inputParametrValueError: ""
 
@@ -44,13 +45,25 @@ class AddNewItemForm extends React.Component {
         }
     }
     handleChange = (event) => {
-        this.setState({
-            newItem: {
-                ...this.state.newItem,
-                [event.target.name]: event.target.value
-            }
+        console.log(event.target.name);
 
-        })
+        if (event.target.name === 'onStock') {
+            this.setState({
+                newItem: {
+                    ...this.state.newItem,
+                    [event.target.name]: event.target.checked
+                }
+            })
+
+        } else {
+            this.setState({
+                newItem: {
+                    ...this.state.newItem,
+                    [event.target.name]: event.target.value
+                }
+            })
+        }
+
     }
 
     newParametrHandleChange = (event) => {
@@ -151,6 +164,7 @@ class AddNewItemForm extends React.Component {
         let inputNameError = "";
         let inputPriceError = "";
         let inputDescriptionError = "";
+        let inputImageError = "";
 
         if (this.state.newItem.name === "") {
             inputNameError = `Podaj nazwę produktu!`
@@ -161,14 +175,18 @@ class AddNewItemForm extends React.Component {
         if (this.state.newItem.description === "") {
             inputDescriptionError = `Uzupełnij opis produktu!`
         }
+        if (this.state.newItem.photo === "") {
+            inputImageError = `Uzupełnij ścieżkę zdjęcia!`
+        }
 
-        if (inputNameError || inputPriceError || inputDescriptionError) {
+        if (inputNameError || inputPriceError || inputDescriptionError || inputImageError) {
             this.setState({
                 errorState: {
                     ...this.state.errorState,
                     inputNameError,
                     inputPriceError,
-                    inputDescriptionError
+                    inputDescriptionError,
+                    inputImageError
                 }
             })
             return false
@@ -233,6 +251,25 @@ class AddNewItemForm extends React.Component {
                     name="price"
                     onChange={this.handleChange}
                     value={this.state.newItem.price} />
+
+                <p name="inputImageError" className="text-red">{this.state.errorState.inputImageError}</p>
+                <input
+                    className="mb-20"
+                    type="text"
+                    placeholder="Ścieżka URL do zdjęcia"
+                    name="photo"
+                    onChange={this.handleChange}
+                    value={this.state.newItem.photo} />
+                <div>
+                    <input
+                        className="mb-20"
+                        type="checkbox"
+                        name="onStock"
+                        id="onStock"
+                        onChange={this.handleChange}
+                        value={this.state.newItem.onStock} />
+                    <label className="ml-5" htmlFor="onStock">Na stanie</label>
+                </div>
 
                 <p name="inputDescriptionError" className="text-red">{this.state.errorState.inputDescriptionError}</p>
                 <textarea
