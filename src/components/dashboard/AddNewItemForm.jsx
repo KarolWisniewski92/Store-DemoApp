@@ -30,8 +30,8 @@ class AddNewItemForm extends React.Component {
                 photo: ""
             },
             newParametr: {
-                newParametrName: '',
-                newParametrValue: ''
+                ParametrName: '',
+                ParametrValue: ''
             },
             errorState: {
                 inputNameError: "",
@@ -127,8 +127,8 @@ class AddNewItemForm extends React.Component {
             }
             this.setState({
                 newParametr: {
-                    newParametrName: '',
-                    newParametrValue: ''
+                    ParametrName: '',
+                    ParametrValue: ''
                 },
                 errorState: {
                     ...this.state.errorState,
@@ -145,7 +145,7 @@ class AddNewItemForm extends React.Component {
     deleteParametr = (event) => {
         let newParametrList = this.state.newItem.parametr.filter((el) => {
             let newList;
-            if (el.newParametrName !== event.target.closest('tr').firstChild.innerHTML) {
+            if (el.ParametrName !== event.target.closest('tr').firstChild.innerHTML) {
                 newList = el
             }
             return newList
@@ -199,10 +199,10 @@ class AddNewItemForm extends React.Component {
         let inputParametrNameError = "";
         let inputParametrValueError = "";
 
-        if (this.state.newParametr.newParametrName === "") {
+        if (this.state.newParametr.ParametrName === "") {
             inputParametrNameError = `Podaj nazwę!`
         }
-        if (this.state.newParametr.newParametrValue === "") {
+        if (this.state.newParametr.ParametrValue === "") {
             inputParametrValueError = `Podaj wartość!`
         }
 
@@ -227,7 +227,7 @@ class AddNewItemForm extends React.Component {
         if (Array.isArray(this.state.newItem.parametr))
 
             parametrList = this.state.newItem.parametr.map((el) => {
-                return (<ParametrList el={el} key={el.newParametrName} deleteParametr={this.deleteParametr} />)
+                return (<ParametrList el={el} key={el.ParametrName} deleteParametr={this.deleteParametr} />)
             })
 
 
@@ -289,16 +289,16 @@ class AddNewItemForm extends React.Component {
                         <input
                             type="text"
                             placeholder="Nazwa parametru"
-                            name="newParametrName"
+                            name="ParametrName"
                             onChange={this.newParametrHandleChange}
-                            value={this.state.newParametr.newParametrName} />
+                            value={this.state.newParametr.ParametrName} />
                         <input
                             className="ml-5"
                             type="text"
                             placeholder="Wartość"
-                            name="newParametrValue"
+                            name="ParametrValue"
                             onChange={this.newParametrHandleChange}
-                            value={this.state.newParametr.newParametrValue} />
+                            value={this.state.newParametr.ParametrValue} />
                         <button type="submit" className="btn-2 btn-green" onClick={this.addNewParametr}>Dodaj parametr</button>
                     </div>
                 </div>

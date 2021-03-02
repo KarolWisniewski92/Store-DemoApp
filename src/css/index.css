@@ -118,4 +118,33 @@ input {
 .btnAddNewItem {
   margin: 20px 0px;
 }
+
+.img-thumbnail {
+  width: 100px;
+  height: 100px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.inventoryItem {
+  border-bottom: 1px solid black;
+}
+
+.inventoryItem span {
+  font-weight: bold;
+}
+
+.inventoryItem .fas {
+  font-size: 18px;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+.inventoryItem .fa-edit:hover {
+  color: #f3bd2a;
+}
+
+.inventoryItem .fa-times:hover {
+  color: #da1111;
+}
 /*# sourceMappingURL=index.css.map */

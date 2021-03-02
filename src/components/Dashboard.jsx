@@ -10,6 +10,7 @@ import { firebaseApp, fbase } from '../fbase';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import AddNewItemForm from './dashboard/AddNewItemForm';
+import InventoryPanel from './dashboard/InventoryPanel';
 
 class DashboardComponent extends React.Component {
 
@@ -144,6 +145,8 @@ class DashboardComponent extends React.Component {
                                     <MyHistory />}
                                 {this.state.showState.showAddItemForm &&
                                     <AddNewItemForm />}
+                                {this.state.showState.showInventoryPanel &&
+                                    <InventoryPanel />}
 
                             </div>
                         </div>
