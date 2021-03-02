@@ -114,8 +114,8 @@ class DashboardComponent extends React.Component {
                         <div className="flex-row">
 
                             <div className="wd-25 p-10 leftBar" onClick={this.showAction} >
-                                <p className="mb-20 active" name="showShopcart">Koszyk:</p>
-                                <p className="mb-20 " name="showMyData" id="test">Moje dane: </p>
+                                <p className="mb-20" name="showShopcart">Koszyk:</p>
+                                <p className="mb-20 active" name="showMyData" id="test">Moje dane: </p>
                                 <p className="mb-20" name="showMyAdres">Moje adresy:</p>
                                 <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
                             </div>
