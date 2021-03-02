@@ -9,6 +9,7 @@ import MyHistory from './dashboard/MyHistory';
 import { firebaseApp, fbase } from '../fbase';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import AddNewItemForm from './dashboard/AddNewItemForm';
 
 class DashboardComponent extends React.Component {
 
@@ -20,7 +21,8 @@ class DashboardComponent extends React.Component {
                 showShopcart: false,
                 showMyData: true,
                 showMyAdres: false,
-                showMyHistory: false
+                showMyHistory: false,
+                showAddItemForm: false
             },
             userData: {
             }
@@ -118,6 +120,9 @@ class DashboardComponent extends React.Component {
                                 <p className="mb-20 active" name="showMyData" id="test">Moje dane: </p>
                                 <p className="mb-20" name="showMyAdres">Moje adresy:</p>
                                 <p className="mb-20" name="showMyHistory">Historia zakupów:</p>
+                                {this.state.userData.isAdmin &&
+                                    <p className="mb-20" name="showAddItemForm">Dodaj nowy przedmiot:</p>
+                                }
                             </div>
                             <div className="wd-75 p-10 ml-30">
                                 {this.state.showState.showShopcart &&
@@ -131,6 +136,9 @@ class DashboardComponent extends React.Component {
 
                                 {this.state.showState.showMyHistory &&
                                     <MyHistory />}
+                                {this.state.showState.showAddItemForm &&
+                                    <AddNewItemForm />}
+
                             </div>
                         </div>
                     </div>
