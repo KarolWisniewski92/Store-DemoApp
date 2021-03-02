@@ -2,6 +2,20 @@ import React from 'react';
 import ParametrList from './ParametrList';
 import { fbase } from '../../fbase';
 
+const createID = () => {
+    return Math.random().toString(36).substr(2, 9);
+};
+
+const initialStateNewItem = {
+    name: "",
+    id: "",
+    description: "",
+    price: "",
+    onStock: "",
+    photo: "",
+    parametr: []
+}
+
 class AddNewItemForm extends React.Component {
 
     constructor() {
@@ -9,15 +23,23 @@ class AddNewItemForm extends React.Component {
         this.state = {
             newItem: {
                 name: "",
+                id: createID(),
                 description: "",
                 price: "",
                 onStock: "",
                 photo: ""
-
             },
             newParametr: {
                 newParametrName: '',
                 newParametrValue: ''
+            },
+            errorState: {
+                inputNameError: "",
+                inputPriceError: "",
+                inputDescriptionError: "",
+                inputParametrNameError: "",
+                inputParametrValueError: ""
+
             }
         }
     }
@@ -43,58 +65,68 @@ class AddNewItemForm extends React.Component {
     addNewItem = (event) => {
         event.preventDefault();
 
+        let validate = this.validateForm();
+        if (validate) {
+            fbase.post(`inventory/${this.state.newItem.id}`, {
+                data: { ...this.state.newItem }
+            }).then(() => {
+                this.setState({
+                    newItem: {
+                        ...initialStateNewItem,
+                        id: createID()
+                    }
+
+                })
+
+            }).catch(err => {
+                // handle error
+            });
+        }
 
 
-
-        fbase.post(`inventory/${this.state.newItem.id}`, {
-            data: { ...this.state.newItem }
-        }).then(() => {
-
-        }).catch(err => {
-            // handle error
-        });
     }
 
     addNewParametr = (event) => {
         event.preventDefault();
-        if (this.state.newItem.parametr !== undefined) {
+
+        let validate = this.validateAddParametrFrom();
+
+        if (validate) {
+            if (this.state.newItem.parametr !== undefined) {
+                this.setState({
+                    newItem: {
+                        ...this.state.newItem,
+                        parametr: [
+                            ...this.state.newItem.parametr,
+                            this.state.newParametr
+                        ]
+                    }
+                })
+            } else {
+                this.setState({
+                    newItem: {
+                        ...this.state.newItem,
+                        parametr: [
+                            this.state.newParametr
+                        ]
+                    }
+                })
+            }
             this.setState({
-                newItem: {
-                    ...this.state.newItem,
-                    parametr: [
-                        ...this.state.newItem.parametr,
-                        this.state.newParametr
-                    ]
+                newParametr: {
+                    newParametrName: '',
+                    newParametrValue: ''
+                },
+                errorState: {
+                    ...this.state.errorState,
+                    inputParametrNameError: "",
+                    inputParametrValueError: ""
+
                 }
             })
-        } else {
-            this.setState({
-                newItem: {
-                    ...this.state.newItem,
-                    parametr: [
-                        this.state.newParametr
-                    ]
-                }
-            })
+
         }
-        this.setState({
-            newParametr: {
-                newParametrName: '',
-                newParametrValue: ''
-            }
-        })
-    }
-    componentDidMount() {
-        const createID = () => {
-            return Math.random().toString(36).substr(2, 9);
-        };
-        let ID = createID();
-        this.setState({
-            newItem: {
-                ...this.state.newItem,
-                id: ID
-            }
-        })
+
     }
 
     deleteParametr = (event) => {
@@ -113,8 +145,63 @@ class AddNewItemForm extends React.Component {
                 ]
             }
         })
-
     }
+
+    validateForm = () => {
+        let inputNameError = "";
+        let inputPriceError = "";
+        let inputDescriptionError = "";
+
+        if (this.state.newItem.name === "") {
+            inputNameError = `Podaj nazwę produktu!`
+        }
+        if (this.state.newItem.price === "") {
+            inputPriceError = `Podaj cenę!`
+        }
+        if (this.state.newItem.description === "") {
+            inputDescriptionError = `Uzupełnij opis produktu!`
+        }
+
+        if (inputNameError || inputPriceError || inputDescriptionError) {
+            this.setState({
+                errorState: {
+                    ...this.state.errorState,
+                    inputNameError,
+                    inputPriceError,
+                    inputDescriptionError
+                }
+            })
+            return false
+        } else {
+            return true
+        }
+    }
+
+    validateAddParametrFrom = () => {
+        let inputParametrNameError = "";
+        let inputParametrValueError = "";
+
+        if (this.state.newParametr.newParametrName === "") {
+            inputParametrNameError = `Podaj nazwę!`
+        }
+        if (this.state.newParametr.newParametrValue === "") {
+            inputParametrValueError = `Podaj wartość!`
+        }
+
+        if (inputParametrNameError || inputParametrValueError) {
+            this.setState({
+                errorState: {
+                    ...this.state.errorState,
+                    inputParametrNameError,
+                    inputParametrValueError,
+                }
+            })
+            return false
+        } else {
+            return true
+        }
+    }
+
 
     render() {
 
@@ -129,15 +216,54 @@ class AddNewItemForm extends React.Component {
         return (<div>
             <h3 className="text-center">DODAJ NOWY PRODUKT:</h3>
             <form onSubmit={this.addNewItem} className="flex-column">
-                <input className="mb-20 mt-10" type="text" placeholder="Nazwa produktu" name="name" onChange={this.handleChange} value={this.state.newItem.name} />
-                <input className="mb-20" type="number" placeholder="Cena" name="price" onChange={this.handleChange} value={this.state.newItem.price} />
+                <p name="inputNameError" className="text-red">{this.state.errorState.inputNameError}</p>
+                <input
+                    className="mb-20 mt-10"
+                    type="text"
+                    placeholder="Nazwa produktu"
+                    name="name"
+                    onChange={this.handleChange}
+                    value={this.state.newItem.name} />
 
-                <textarea className="h250-min p-5" type="text" placeholder="Opis produktu" name="description" onChange={this.handleChange} value={this.state.newItem.description} />
+                <p name="inputPriceError" className="text-red">{this.state.errorState.inputPriceError}</p>
+                <input
+                    className="mb-20"
+                    type="number"
+                    placeholder="Cena"
+                    name="price"
+                    onChange={this.handleChange}
+                    value={this.state.newItem.price} />
+
+                <p name="inputDescriptionError" className="text-red">{this.state.errorState.inputDescriptionError}</p>
+                <textarea
+                    className="h250-min p-5"
+                    type="text"
+                    placeholder="Opis produktu"
+                    name="description"
+                    onChange={this.handleChange}
+                    value={this.state.newItem.description} />
 
                 <div className="mbt-10">
-                    <input type="text" placeholder="Nazwa parametru" name="newParametrName" onChange={this.newParametrHandleChange} value={this.state.newParametr.newParametrName} />
-                    <input className="ml-5" type="text" placeholder="Wartość" name="newParametrValue" onChange={this.newParametrHandleChange} value={this.state.newParametr.newParametrValue} />
-                    <button type="submit" className="btn-2 btn-green" onClick={this.addNewParametr}>Dodaj parametr</button>
+                    <div className="flex-row">
+                        <p name="inputParametrNameError" className="text-red">{this.state.errorState.inputParametrNameError}</p>
+                        <p name="inputParametrValueError" className="text-red">{this.state.errorState.inputParametrValueError}</p>
+                    </div>
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Nazwa parametru"
+                            name="newParametrName"
+                            onChange={this.newParametrHandleChange}
+                            value={this.state.newParametr.newParametrName} />
+                        <input
+                            className="ml-5"
+                            type="text"
+                            placeholder="Wartość"
+                            name="newParametrValue"
+                            onChange={this.newParametrHandleChange}
+                            value={this.state.newParametr.newParametrValue} />
+                        <button type="submit" className="btn-2 btn-green" onClick={this.addNewParametr}>Dodaj parametr</button>
+                    </div>
                 </div>
                 <table className="parametrListTable">
                     <tbody>
