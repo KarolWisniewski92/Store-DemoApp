@@ -110,4 +110,8 @@ input {
 .parametrListTable .fa-trash-alt:hover {
   color: red;
 }
+
+.btnAddNewItem {
+  margin: 20px 0px;
+}
 /*# sourceMappingURL=index.css.map */

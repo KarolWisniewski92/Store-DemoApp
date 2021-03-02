@@ -63,6 +63,10 @@
   margin-bottom: 30px;
 }
 
+.mlr-0 {
+  margin: 0px;
+}
+
 .mlr-5 {
   margin: 0px 5px;
 }
@@ -77,6 +81,10 @@
 
 .mlr-30 {
   margin: 0px 30px;
+}
+
+.mbt-0 {
+  margin: 0px;
 }
 
 .mbt-5 {
